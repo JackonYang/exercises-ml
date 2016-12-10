@@ -20,17 +20,23 @@ groups = [
 train_data = sklearn.datasets.load_mlcomp('20news-18828', 'train', mlcomp_root=MLCOMP_DIR, categories=groups)
 test_data = sklearn.datasets.load_mlcomp('20news-18828', 'test', mlcomp_root=MLCOMP_DIR, categories=groups)
 
-print len(train_data.filenames)
-print len(test_data.filenames)
+# print len(train_data.filenames)
+# print len(test_data.filenames)
 
 
 english_stemmer = nltk.stem.SnowballStemmer('english')
 
 
-class StemmedCountVectorizer(TfidfVectorizer):
+class StemmedTfidfVectorizer(TfidfVectorizer):
     def build_analyzer(self):
-        analyzer = super(StemmedCountVectorizer, self).build_analyzer()
+        analyzer = super(StemmedTfidfVectorizer, self).build_analyzer()
         return lambda doc: (english_stemmer.stem(w) for w in analyzer(doc))
 
 
-vectorizer = StemmedCountVectorizer(min_df=1, stop_words='english')
+vectorizer = StemmedTfidfVectorizer(min_df=10, max_df=0.5, stop_words='english', decode_error=u'ignore')
+
+x = vectorizer.fit_transform(train_data.data)
+
+num_samples, num_features = x.shape
+
+print 'train_data samples: %s, features: %s' % (num_samples, num_features)
