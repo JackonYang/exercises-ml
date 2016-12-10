@@ -5,4 +5,4 @@
 
 ## Building Machine Learning Systems with Python
 
-![Building Machine Learning Systems with Python](building-machine-learning-systems-with-python/cover.jpg)
+![Building Machine Learning Systems with Python](https://raw.githubusercontent.com/JackonYang/exercises-ml/master/building-machine-learning-systems-with-python/over.jpg)
