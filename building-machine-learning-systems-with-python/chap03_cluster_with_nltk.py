@@ -15,15 +15,15 @@ class StemmedCountVectorizer(CountVectorizer):
         return lambda doc: (english_stemmer.stem(w) for w in analyzer(doc))
 
 
-vectorizer = CountVectorizer(min_df=1, stop_words='english')
-# vectorizer = StemmedCountVectorizer(min_df=1, stop_words='english')
+# vectorizer = CountVectorizer(min_df=1, stop_words='english')
+vectorizer = StemmedCountVectorizer(min_df=1, stop_words='english')
 
 content = [
     'This is a toy post about machine learning. Actually, it contains not much interesting stuff.',
     'Imaging database can get huge.',
     'Most imaging databases safe images permanently.',
-    'Imaging databases store images.',
-    'Imaging databases store images. Imaging databases store images. Imaging databases store images.',
+    'Imaging databases store data.',
+    'Imaging databases store data. Imaging databases store data. Imaging databases store data.',
 ]
 
 x = vectorizer.fit_transform(content)
