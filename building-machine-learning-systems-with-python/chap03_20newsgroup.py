@@ -5,6 +5,9 @@ import sklearn.datasets
 from sklearn.feature_extraction.text import TfidfVectorizer
 import nltk.stem
 
+from sklearn.cluster import KMeans
+
+
 _home_path = os.path.expanduser('~')
 MLCOMP_DIR = os.path.join(_home_path, 'data')
 
@@ -40,3 +43,12 @@ x = vectorizer.fit_transform(train_data.data)
 num_samples, num_features = x.shape
 
 print 'train_data samples: %s, features: %s' % (num_samples, num_features)
+
+
+NUM_CLUSTERS = 50
+
+km = KMeans(n_clusters=NUM_CLUSTERS, init='random', n_init=1, verbose=1)
+
+km.fit(x)
+
+print km.labels_
