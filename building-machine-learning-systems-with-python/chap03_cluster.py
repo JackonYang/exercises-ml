@@ -4,7 +4,7 @@ import sys
 from sklearn.feature_extraction.text import CountVectorizer
 import scipy as sp
 
-vectorizer = CountVectorizer(min_df=1)
+vectorizer = CountVectorizer(min_df=1, stop_words='english')
 
 content = [
     'This is a toy post about machine learning. Actually, it contains not much interesting stuff.',
@@ -18,7 +18,7 @@ x = vectorizer.fit_transform(content)
 
 num_samples, num_features = x.shape
 
-# print 'samples: %s, features: %s' % (num_samples, num_features)
+print 'samples: %s, features: %s' % (num_samples, num_features)
 
 # print vectorizer.get_feature_names()
 
