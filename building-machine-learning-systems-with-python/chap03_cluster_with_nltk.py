@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 import sys
 
-from sklearn.feature_extraction.text import CountVectorizer
+# from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.feature_extraction.text import TfidfVectorizer
 import scipy as sp
 import nltk.stem
 
@@ -9,7 +10,7 @@ import nltk.stem
 english_stemmer = nltk.stem.SnowballStemmer('english')
 
 
-class StemmedCountVectorizer(CountVectorizer):
+class StemmedCountVectorizer(TfidfVectorizer):
     def build_analyzer(self):
         analyzer = super(StemmedCountVectorizer, self).build_analyzer()
         return lambda doc: (english_stemmer.stem(w) for w in analyzer(doc))
