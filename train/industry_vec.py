@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 import os
 
+import numpy as np
+
 
 _home_path = os.path.expanduser('~')
 MLCOMP_DIR = os.path.join(_home_path, 'data')
@@ -36,14 +38,22 @@ def fetch_data(name, set_, mlcomp_root, categories=None):
             with open(filename, 'rb') as f:
                 yield folder, f.read()
 
-train_data = fetch_data('379', 'train', mlcomp_root=MLCOMP_DIR, categories=groups)
-# test_data = load_data('379', 'test', mlcomp_root=MLCOMP_DIR, categories=groups)
+
+def main():
+    train_data = fetch_data('379', 'train', mlcomp_root=MLCOMP_DIR, categories=groups)
+    # test_data = load_data('379', 'test', mlcomp_root=MLCOMP_DIR, categories=groups)
+
+    dataset = []
+    targets = []
+
+    for target_name, data in train_data:
+        dataset.append(data)
+        targets.append(target_name.endswith('hardware'))
+
+    Y = np.asarray(targets)
+
+    print Y
 
 
-for target_name, data in train_data:
-    print target_name
-
-
-
-# print len(train_data.filenames)
-# print len(test_data.filenames)
+if __name__ == '__main__':
+    main()
