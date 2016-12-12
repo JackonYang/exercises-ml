@@ -54,22 +54,28 @@ def extract_features_from_body(s):
     return [[i] for i in range(len(s))]
 
 
-def main():
-    train_data = fetch_data('379', 'train', mlcomp_root=MLCOMP_DIR, categories=groups)
-    # test_data = load_data('379', 'test', mlcomp_root=MLCOMP_DIR, categories=groups)
+def load_data(set_):
+    data = fetch_data('379', set_, mlcomp_root=MLCOMP_DIR, categories=groups)
 
     dataset = []
     targets = []
 
-    for target_name, data in train_data:
+    for target_name, data in data:
         dataset.append(data)
         targets.append(target_name.endswith('hardware'))
 
     X = extract_features_from_body(dataset)
     Y = np.asarray(targets)
-    model = build_model(X, Y)
+    return X, Y
 
-    print model.predict(100)
+
+def main():
+    train_X, train_Y = load_data('train')
+    test_X, test_Y = load_data('test')
+
+    model = build_model(train_X, train_Y)
+
+    print model.score(test_X, test_Y)
 
 
 if __name__ == '__main__':
