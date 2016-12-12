@@ -50,6 +50,10 @@ def build_model(X, Y):
     return knn_model(X, Y)
 
 
+def extract_features_from_body(s):
+    return [[i] for i in range(len(s))]
+
+
 def main():
     train_data = fetch_data('379', 'train', mlcomp_root=MLCOMP_DIR, categories=groups)
     # test_data = load_data('379', 'test', mlcomp_root=MLCOMP_DIR, categories=groups)
@@ -61,10 +65,8 @@ def main():
         dataset.append(data)
         targets.append(target_name.endswith('hardware'))
 
+    X = extract_features_from_body(dataset)
     Y = np.asarray(targets)
-
-    X = [[i] for i in range(len(Y))]
-
     model = build_model(X, Y)
 
     print model.predict(100)
