@@ -51,7 +51,7 @@ def build_model(X, Y):
 
 
 def extract_features_from_body(s):
-    return [[i] for i in range(len(s))]
+    return [[len(text), text.count('\n')] for text in s]
 
 
 def load_data(set_):
