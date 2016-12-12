@@ -2,6 +2,7 @@
 import os
 
 import numpy as np
+from sklearn import neighbors
 
 
 _home_path = os.path.expanduser('~')
@@ -39,6 +40,16 @@ def fetch_data(name, set_, mlcomp_root, categories=None):
                 yield folder, f.read()
 
 
+def knn_model(X, Y):
+    knn = neighbors.KNeighborsClassifier(n_neighbors=2)
+    knn.fit(X, Y)
+    return knn
+
+
+def build_model(X, Y):
+    return knn_model(X, Y)
+
+
 def main():
     train_data = fetch_data('379', 'train', mlcomp_root=MLCOMP_DIR, categories=groups)
     # test_data = load_data('379', 'test', mlcomp_root=MLCOMP_DIR, categories=groups)
@@ -52,7 +63,11 @@ def main():
 
     Y = np.asarray(targets)
 
-    print Y
+    X = [[i] for i in range(len(Y))]
+
+    model = build_model(X, Y)
+
+    print model.predict(100)
 
 
 if __name__ == '__main__':
