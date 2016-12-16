@@ -4,6 +4,8 @@ import os
 import numpy as np
 from sklearn import neighbors
 
+from sklearn.naive_bayes import MultinomialNB
+
 
 _home_path = os.path.expanduser('~')
 MLCOMP_DIR = os.path.join(_home_path, 'data')
@@ -46,8 +48,14 @@ def knn_model(X, Y):
     return knn
 
 
+def naive_bayes_model(X, Y):
+    classifier = MultinomialNB()
+    classifier.fit(X, Y)
+    return classifier
+
+
 def build_model(X, Y):
-    return knn_model(X, Y)
+    return naive_bayes_model(X, Y)
 
 
 def extract_features_from_body(s):
