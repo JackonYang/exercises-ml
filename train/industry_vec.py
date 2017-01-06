@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
 import os
+# import chardet
 
 import numpy as np
 from sklearn import neighbors
 
 from sklearn.naive_bayes import MultinomialNB
+
+from stemmed_vec import StemmedCountVectorizer
 
 
 _home_path = os.path.expanduser('~')
@@ -49,17 +52,30 @@ def knn_model(X, Y):
 
 
 def naive_bayes_model(X, Y):
+
+    print '-----------------------------'
+    print X.shape, Y.shape
+    print '-----------------------------'
+
     classifier = MultinomialNB()
     classifier.fit(X, Y)
     return classifier
 
 
 def build_model(X, Y):
-    return naive_bayes_model(X, Y)
+    return knn_model(X, Y)
+    # return naive_bayes_model(X, Y)
 
 
 def extract_features_from_body(s):
-    return [[len(text), text.count('\n')] for text in s]
+    # [[len(text), text.count('\n')] for text in s]
+    data = [text.decode('ISO-8859-2') for text in s]
+
+    vectorizer = StemmedCountVectorizer(min_df=1, stop_words='english')
+    x = vectorizer.fit_transform(data)
+    print type(x)
+    print x.shape
+    return x
 
 
 def load_data(set_):
@@ -78,11 +94,22 @@ def load_data(set_):
 
 
 def main():
-    train_X, train_Y = load_data('train')
-    test_X, test_Y = load_data('test')
+
+    # train_X, train_Y = load_data('train')
+    # test_X, test_Y = load_data('test')
+
+    data_x, data_y = load_data('raw')
+
+    train_X, train_Y = data_x[:4119], data_y[:4119]
+    test_X, test_Y = data_x[4119:], data_y[4119:]
 
     model = build_model(train_X, train_Y)
 
+    print '-----------------------------'
+    print test_X.shape, test_Y.shape
+    print '-----------------------------'
+
+    # print model.predict(test_X)
     print model.score(test_X, test_Y)
 
 
