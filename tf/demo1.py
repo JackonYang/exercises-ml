@@ -3,7 +3,7 @@ import numpy as np
 
 # Create 100 phony x, y data points in NumPy, y = x * 0.1 + 0.3
 x_data = np.random.rand(100).astype(np.float32)
-y_data = x_data * 0.1 + 0.3
+y_data = x_data * 0.1785745 + 0.3546
 
 # Try to find values for W and b that compute y_data = W * x_data + b
 # (We know that W should be 0.1 and b 0.3, but TensorFlow will
