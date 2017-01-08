@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 import random
 from captcha.image import ImageCaptcha
+from PIL import Image
+import numpy as np
 
 
 def gen_captcha():
@@ -11,8 +13,19 @@ def gen_captcha():
     return code, filename
 
 
+def load_img(img_filename):
+    return np.array(Image.open(img_filename).convert('L'))
+
+
 # data = data.reshape(num_images, rows, cols, 1)
 
 
+def main():
+    code, filename = gen_captcha()
+    im = load_img(filename)
+
+    print im.shape
+
+
 if __name__ == '__main__':
-    print gen_captcha()
+    main()
