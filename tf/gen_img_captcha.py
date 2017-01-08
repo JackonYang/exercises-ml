@@ -35,7 +35,7 @@ def read_data(count, length):
         yield code_vec, im
 
 
-def load_inputs(count=77, length=1):
+def load_inputs(count=100, length=1):
     codes = []
     imgs = []
     for code, im in read_data(count, length):
