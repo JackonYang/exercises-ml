@@ -14,19 +14,36 @@ def gen_captcha(num):
 
 
 def load_img(img_filename):
-    return np.array(Image.open(img_filename).convert('L'))
+    data = np.array(Image.open(img_filename).convert('L'))
+    w, h = data.shape
+    one_d = data.reshape((1, w * h))
+    return one_d
 
 
-# data = data.reshape(num_images, rows, cols, 1)
+def num_to_one_hot(number):
+    one_hot = np.zeros((10,))
+    one_hot[int(number) - 1] = 1
+    return one_hot
 
 
-def main(n):
-    code, filename = gen_captcha(n)
-    im = load_img(filename)
+def read_data(count, length):
+    for i in range(count):
+        code, filename = gen_captcha(length)
 
-    print code
-    print im.shape
+        code_vec = num_to_one_hot(code)
+        im = load_img(filename)
+        yield code_vec, im
+
+
+def load_inputs(count=77, length=1):
+    codes = []
+    imgs = []
+    for code, im in read_data(count, length):
+        codes.append(code)
+        imgs.append(im)
+
+    return np.vstack(codes), np.vstack(imgs)
 
 
 if __name__ == '__main__':
-    main(4)
+    print load_inputs()
