@@ -5,8 +5,8 @@ from PIL import Image
 import numpy as np
 
 
-def gen_captcha():
-    code = random.randint(0, 10)
+def gen_captcha(num):
+    code = ''.join(map(lambda x: str(random.randint(0, 9)), range(num)))
     image = ImageCaptcha()
     filename = 'img/%s.png' % code
     image.write(str(code), filename)
@@ -20,12 +20,13 @@ def load_img(img_filename):
 # data = data.reshape(num_images, rows, cols, 1)
 
 
-def main():
-    code, filename = gen_captcha()
+def main(n):
+    code, filename = gen_captcha(n)
     im = load_img(filename)
 
+    print code
     print im.shape
 
 
 if __name__ == '__main__':
-    main()
+    main(4)
