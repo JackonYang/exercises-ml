@@ -42,7 +42,7 @@ def load_inputs(count=77, length=1):
         codes.append(code)
         imgs.append(im)
 
-    return np.vstack(codes), np.vstack(imgs)
+    return np.vstack(imgs), np.vstack(codes)
 
 
 if __name__ == '__main__':
