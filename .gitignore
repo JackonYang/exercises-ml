@@ -8,6 +8,8 @@
 # Redis
 dump.rdb
 
+img
+
 # pytest
 .cache
 .coverage
