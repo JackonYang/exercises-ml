@@ -64,7 +64,8 @@ def main(_):
     tf.global_variables_initializer().run()
     # Train
     for _ in range(1000):
-        print(_)
+        if not _ % 10:
+            print(_)
         batch_xs, batch_ys = train_xs, train_ys
         sess.run(train_step, feed_dict={x: batch_xs, y_: batch_ys})
 
